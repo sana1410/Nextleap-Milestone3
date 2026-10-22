@@ -1,317 +1,279 @@
 # Deployment Plan — Weekly App Review Pulse
 
-Deploy the backend pipeline on **Railway** and the frontend dashboard on **Vercel**.
+Deploy the entire project (backend pipeline + frontend dashboard) as a **single Streamlit app** on **Streamlit Community Cloud**.
 
 ---
 
 ## Architecture Overview
 
 ```
-┌──────────────────────┐       ┌──────────────────────────┐
-│   Vercel (Frontend)  │       │    Railway (Backend)      │
-│                      │       │                           │
-│  frontend/index.html │◄──────│  Python pipeline (cron)   │
-│  Static dashboard    │  API  │  src/main.py              │
-│                      │       │                           │
-│  Reads: /api/data    │       │  Serves: /api/data        │
-│         /api/pulse   │       │          /api/pulse       │
-└──────────────────────┘       └───────────┬───────────────┘
-                                           │
-                              ┌────────────┼────────────┐
-                              │            │            │
-                         Play Store    Groq LLM    MCP Server
-                          Scraper     (Qwen 27B)   (Railway)
-                                                  Google Docs
-                                                    Gmail
+┌─────────────────────────────────────────────────┐
+│         Streamlit Community Cloud                │
+│                                                  │
+│  streamlit_app.py                                │
+│  ┌─────────────────┐  ┌──────────────────────┐  │
+│  │  Dashboard UI    │  │  Pipeline Backend    │  │
+│  │  - Stat cards    │  │  - Review collector  │  │
+│  │  - Theme charts  │  │  - Data processor    │  │
+│  │  - Quotes        │  │  - Theme clusterer   │  │
+│  │  - Rating bars   │  │  - Pulse generator   │  │
+│  │  - Donut chart   │  │  - MCP delivery      │  │
+│  └─────────────────┘  └──────────────────────┘  │
+│                                                  │
+│  Reads: data_seed/themes.json                    │
+│         data_seed/pulse.md                       │
+└──────────────────────┬───────────────────────────┘
+                       │
+          ┌────────────┼────────────┐
+          │            │            │
+     Play Store    Groq LLM    MCP Server
+      Scraper     (Qwen 27B)   (Railway)
+                              Google Docs
+                                Gmail
 ```
+
+**Why Streamlit?**
+- Single deployment — no separate backend/frontend
+- Free hosting on Streamlit Community Cloud
+- Direct GitHub integration — auto-deploys on push
+- Built-in secrets management for API keys
+- Native Python — reuses existing pipeline code directly
 
 ---
 
-## Part 1: Backend on Railway
+## Part 1: Create the Streamlit App
 
-### Step 1 — Create a Flask API wrapper
+### Step 1 — Create `streamlit_app.py`
 
-The pipeline currently runs as a CLI script. Wrap it in a minimal Flask server so Railway can keep it alive and serve data to the frontend.
-
-**Create `server.py`** in the project root:
+The Streamlit app combines the dashboard UI and pipeline access in one file. It reads data from `data_seed/` (committed to git) and renders the dashboard with Streamlit components, custom HTML/CSS, and Plotly charts.
 
 ```python
-from flask import Flask, jsonify, send_file
+import streamlit as st
 import json
 import os
-import subprocess
-import threading
 
-app = Flask(__name__)
+st.set_page_config(
+    page_title="Weekly App Review Pulse — Groww",
+    page_icon="📊",
+    layout="wide",
+)
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SEED_DIR = os.path.join(BASE_DIR, "data_seed")
 
-@app.route("/")
-def health():
-    return jsonify({"status": "ok", "service": "weekly-app-review-pulse"})
+@st.cache_data
+def load_themes():
+    path = os.path.join(SEED_DIR, "themes.json")
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-@app.route("/api/data")
-def get_data():
-    """Return themes.json for the frontend dashboard."""
-    themes_path = os.path.join(DATA_DIR, "themes.json")
-    if not os.path.exists(themes_path):
-        return jsonify({"error": "No data yet. Run the pipeline first."}), 404
-    with open(themes_path, "r", encoding="utf-8") as f:
-        return jsonify(json.load(f))
+@st.cache_data
+def load_pulse():
+    path = os.path.join(SEED_DIR, "pulse.md")
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
 
-@app.route("/api/pulse")
-def get_pulse():
-    """Return the generated pulse markdown."""
-    pulse_path = os.path.join(DATA_DIR, "pulse.md")
-    if not os.path.exists(pulse_path):
-        return jsonify({"error": "No pulse yet. Run the pipeline first."}), 404
-    with open(pulse_path, "r", encoding="utf-8") as f:
-        return jsonify({"pulse": f.read()})
+data = load_themes()
+themes = data["themes"]
+total = data["metadata"]["review_count"]
 
-@app.route("/api/run", methods=["POST"])
-def run_pipeline():
-    """Trigger a pipeline run (non-blocking)."""
-    def _run():
-        subprocess.run(
-            ["python", "src/main.py", "--dry-run"],
-            cwd=os.path.dirname(os.path.abspath(__file__)),
-        )
-    thread = threading.Thread(target=_run, daemon=True)
-    thread.start()
-    return jsonify({"status": "pipeline started"})
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host="0.0.0.0", port=port)
+# Render stat cards, charts, themes, quotes using:
+#   st.columns(), st.metric(), st.progress()
+#   st.markdown() with custom HTML/CSS
+#   plotly for donut chart and bar charts
 ```
 
-### Step 2 — Add deployment files
+Key sections to implement:
+1. **Nav bar** — Custom HTML via `st.markdown()` with Groww branding
+2. **4 stat cards** — `st.columns(4)` + `st.metric()` for Reviews, Themes, Avg Rating, Window
+3. **Top themes** — `st.columns([7,5])` for two-column layout, custom styled cards
+4. **Suggested actions** — Numbered action items with theme pills
+5. **User voices** — Quote cards with star ratings
+6. **Donut chart** — `plotly.graph_objects.Pie` for theme distribution
+7. **Rating breakdown** — Horizontal bar chart with `plotly` or `st.progress()`
+8. **Pulse text** — Expandable section showing the raw pulse markdown
 
-**Update `requirements.txt`:**
+### Step 2 — Create Streamlit config
+
+**Create `.streamlit/config.toml`:**
+```toml
+[theme]
+primaryColor = "#00D09C"
+backgroundColor = "#F5F6FA"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#1A1A2E"
+font = "sans serif"
+
+[server]
+headless = true
+```
+
+### Step 3 — Update `requirements.txt`
+
 ```
 google-play-scraper
 groq
 python-dotenv
 requests
-flask
-gunicorn
+streamlit
+plotly
 ```
 
-**Create `Procfile`** in the project root:
-```
-web: gunicorn server:app --bind 0.0.0.0:$PORT --timeout 120
+Remove `flask`, `flask-cors`, `gunicorn` — they are no longer needed.
+
+---
+
+## Part 2: Seed Data
+
+The `data/` directory is gitignored (runtime output). The `data_seed/` directory is committed and contains the latest pipeline output for the dashboard to display:
+
+- `data_seed/themes.json` — 5 themes with counts, ratings, quotes
+- `data_seed/pulse.md` — Generated pulse note
+
+To refresh seed data after a pipeline run:
+
+```bash
+cp data/themes.json data_seed/themes.json
+cp data/pulse.md data_seed/pulse.md
+git add data_seed/
+git commit -m "Update seed data from latest pipeline run"
+git push
 ```
 
-**Create `runtime.txt`** in the project root:
+Streamlit Community Cloud will auto-redeploy on push.
+
+---
+
+## Part 3: Deploy to Streamlit Community Cloud
+
+### Step 1 — Push to GitHub
+
+Ensure the repo is pushed with all required files:
 ```
-python-3.11.x
+streamlit_app.py          # Main Streamlit app
+.streamlit/config.toml    # Theme configuration
+requirements.txt          # Python dependencies (with streamlit, plotly)
+data_seed/themes.json     # Seed data
+data_seed/pulse.md        # Seed data
+src/                      # Pipeline source code
 ```
 
-**Create `nixpacks.toml`** (Railway's build system):
+### Step 2 — Connect to Streamlit Community Cloud
+
+1. Go to [share.streamlit.io](https://share.streamlit.io)
+2. Sign in with GitHub
+3. Click **"New app"**
+4. Select:
+   - **Repository:** `sana1410/Nextleap-Milestone3`
+   - **Branch:** `master`
+   - **Main file path:** `streamlit_app.py`
+5. Click **"Deploy"**
+
+### Step 3 — Configure secrets
+
+In the Streamlit Cloud dashboard → App settings → **Secrets**, add:
+
 ```toml
-[phases.setup]
-nixPkgs = ["python311"]
-
-[phases.install]
-cmds = ["pip install -r requirements.txt"]
-
-[start]
-cmd = "gunicorn server:app --bind 0.0.0.0:$PORT --timeout 120"
+GROQ_API_KEY = "your_groq_api_key_here"
+EMAIL_RECIPIENT = "your_email_here"
+GOOGLE_DOC_ID = "your_google_doc_id_here"
+MCP_SERVER_URL = "https://desirable-dedication-production-f08d.up.railway.app"
 ```
 
-### Step 3 — Seed data for first deploy
+Access in code via `st.secrets["GROQ_API_KEY"]`.
 
-The `data/` directory is gitignored. For the first deploy, the pipeline needs to run at least once to generate `themes.json` and `pulse.md`. Options:
+### Step 4 — Verify deployment
 
-- **Option A (recommended):** Run the pipeline locally first, then commit the data files to a `data_seed/` directory. Add a startup script that copies seed data to `data/` if empty.
-- **Option B:** After deploying, trigger `/api/run` to run the pipeline on Railway (~10 min).
-
-### Step 4 — Deploy to Railway
-
-```bash
-# 1. Install Railway CLI (if not installed)
-npm install -g @railway/cli
-
-# 2. Login
-railway login
-
-# 3. Create a new project
-railway init
-
-# 4. Set environment variables
-railway variables set GROQ_API_KEY=your_key_here
-railway variables set EMAIL_RECIPIENT=your_email_here
-railway variables set GOOGLE_DOC_ID=your_google_doc_id_here
-railway variables set MCP_SERVER_URL=https://desirable-dedication-production-f08d.up.railway.app
-
-# 5. Deploy
-railway up
-
-# 6. Get the public URL
-railway domain
-```
-
-Railway will:
-- Detect the Python project via `requirements.txt` / `nixpacks.toml`
-- Install dependencies
-- Start the Gunicorn server on the assigned PORT
-- Provide a public `*.up.railway.app` URL
-
-### Step 5 — Verify backend
-
-```bash
-# Health check
-curl https://<your-app>.up.railway.app/
-
-# Fetch themes data
-curl https://<your-app>.up.railway.app/api/data
-
-# Fetch pulse
-curl https://<your-app>.up.railway.app/api/pulse
-```
-
----
-
-## Part 2: Frontend on Vercel
-
-### Step 1 — Make frontend dynamic
-
-Update `frontend/index.html` to fetch data from the Railway backend API instead of using hardcoded values. Add a `<script>` block that:
-
-1. Fetches `https://<railway-backend-url>/api/data` on page load
-2. Populates stat cards, themes, quotes, donut chart, and rating bars from the API response
-3. Falls back to the hardcoded values if the API is unreachable
-
-Also add CORS headers on the backend (`flask-cors` package) or use Vercel rewrites to proxy `/api/*` to Railway.
-
-### Step 2 — Create Vercel configuration
-
-**Create `frontend/vercel.json`:**
-```json
-{
-  "buildCommand": null,
-  "outputDirectory": ".",
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://<your-railway-app>.up.railway.app/api/:path*"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
-      ]
-    }
-  ]
-}
-```
-
-The `rewrites` block proxies `/api/*` requests to the Railway backend, avoiding CORS issues entirely.
-
-### Step 3 — Deploy to Vercel
-
-```bash
-# 1. Install Vercel CLI
-npm install -g vercel
-
-# 2. Navigate to frontend directory
-cd frontend
-
-# 3. Deploy (follow the prompts)
-vercel
-
-# 4. For production deployment
-vercel --prod
-```
-
-Vercel will:
-- Detect a static site (single `index.html`)
-- Deploy it globally on their CDN
-- Apply the `vercel.json` rewrite rules
-- Provide a public `*.vercel.app` URL
-
-### Step 4 — Verify frontend
-
-1. Open `https://<your-app>.vercel.app` in a browser
-2. Confirm the dashboard loads with all sections:
-   - 4 stat cards (Reviews, Themes, Rating, Window)
-   - Top 3 themes with progress bars
-   - Suggested actions
+1. Open the provided `https://<your-app>.streamlit.app` URL
+2. Confirm the dashboard loads with:
+   - 4 stat cards (Reviews: 380, Themes: 5, Avg Rating: 2.6, Window: 10 wks)
+   - Top 3 themes with progress bars and star ratings
+   - Suggested actions with numbered items
    - User voice quotes
-   - Donut chart (review distribution)
+   - Donut chart showing review distribution across 5 themes
    - Rating breakdown with 1-star alert
-3. Check browser DevTools Network tab — `/api/data` should proxy to Railway
+   - Expandable pulse text section
 
 ---
 
-## Part 3: Environment Variables Summary
+## Part 4: Environment Variables Summary
 
-| Variable          | Where         | Value                                                        |
-|-------------------|---------------|--------------------------------------------------------------|
-| `GROQ_API_KEY`    | Railway       | Your Groq API key                                            |
-| `EMAIL_RECIPIENT` | Railway       | Target email for pulse delivery                               |
-| `GOOGLE_DOC_ID`   | Railway       | Google Doc ID for pulse publishing                            |
-| `MCP_SERVER_URL`  | Railway       | `https://desirable-dedication-production-f08d.up.railway.app` |
-| `PORT`            | Railway (auto)| Set automatically by Railway                                  |
+| Variable          | Where                    | Value                                                        |
+|-------------------|--------------------------|--------------------------------------------------------------|
+| `GROQ_API_KEY`    | Streamlit Cloud Secrets  | Your Groq API key                                            |
+| `EMAIL_RECIPIENT` | Streamlit Cloud Secrets  | Target email for pulse delivery                               |
+| `GOOGLE_DOC_ID`   | Streamlit Cloud Secrets  | Google Doc ID for pulse publishing                            |
+| `MCP_SERVER_URL`  | Streamlit Cloud Secrets  | `https://desirable-dedication-production-f08d.up.railway.app` |
 
-The frontend on Vercel needs **no environment variables** — it proxies API requests via `vercel.json` rewrites.
+Locally, these remain in `.env` (gitignored). On Streamlit Cloud, use the Secrets panel.
 
 ---
 
-## Part 4: CI/CD (Optional)
+## Part 5: CI/CD
 
 ### Auto-deploy on push
 
-Both Railway and Vercel support GitHub integration:
+Streamlit Community Cloud monitors the connected GitHub repo. Every push to `master` triggers an automatic redeploy — no extra CI/CD configuration needed.
 
-1. **Railway:** Connect the GitHub repo → auto-deploys on push to `master`
-2. **Vercel:** Connect the GitHub repo → set root directory to `frontend/` → auto-deploys on push
+### Refreshing dashboard data
 
-### Scheduled pipeline runs
-
-To run the pipeline weekly (every Monday at 6 AM UTC), add a Railway cron job:
-
+After running the pipeline locally:
 ```bash
-# In Railway dashboard → Settings → Cron
-# Schedule: 0 6 * * 1
-# Command: python src/main.py
+# Run pipeline
+python src/main.py --skip-fetch --dry-run
+
+# Copy fresh data to seed
+cp data/themes.json data_seed/themes.json
+cp data/pulse.md data_seed/pulse.md
+
+# Push — Streamlit auto-redeploys
+git add data_seed/
+git commit -m "Refresh seed data"
+git push
 ```
 
-Or use the `/api/run` endpoint with an external cron service (cron-job.org, GitHub Actions).
+### Optional: Pipeline run from Streamlit sidebar
 
-**GitHub Actions example** (`.github/workflows/weekly-pulse.yml`):
-```yaml
-name: Weekly Pulse
-on:
-  schedule:
-    - cron: '0 6 * * 1'
-  workflow_dispatch:
+The Streamlit app can include a sidebar button to trigger the pipeline directly on Streamlit Cloud (limited by Groq rate limits — ~10 min runtime):
 
-jobs:
-  trigger:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger pipeline
-        run: |
-          curl -X POST https://<your-app>.up.railway.app/api/run
+```python
+with st.sidebar:
+    if st.button("🔄 Run Pipeline"):
+        with st.spinner("Running pipeline (~10 min)..."):
+            from src.main import run_pipeline
+            run_pipeline(skip_fetch=False, dry_run=True)
+            st.cache_data.clear()
+            st.rerun()
 ```
+
+---
+
+## Part 6: Files to Clean Up
+
+The following files from the previous Railway/Vercel deployment plan are no longer needed:
+
+| File                | Action          | Reason                                      |
+|---------------------|-----------------|---------------------------------------------|
+| `server.py`         | Delete          | Flask API wrapper replaced by Streamlit      |
+| `Procfile`          | Delete          | Railway-specific                             |
+| `nixpacks.toml`     | Delete          | Railway-specific                             |
+| `runtime.txt`       | Delete          | Railway-specific                             |
+| `frontend/vercel.json` | Delete       | Vercel-specific                              |
+| `frontend/index.html`  | Keep (reference) | Design reference for Streamlit layout     |
+
+Update `requirements.txt` to replace `flask`/`flask-cors`/`gunicorn` with `streamlit`/`plotly`.
 
 ---
 
 ## Deployment Checklist
 
-- [ ] Create `server.py` (Flask API wrapper)
-- [ ] Update `requirements.txt` (add `flask`, `gunicorn`)
-- [ ] Create `Procfile`
-- [ ] Create `nixpacks.toml`
-- [ ] Deploy backend to Railway
-- [ ] Set Railway environment variables
-- [ ] Verify backend API endpoints
-- [ ] Update `frontend/index.html` to fetch from API
-- [ ] Create `frontend/vercel.json` with rewrites
-- [ ] Deploy frontend to Vercel
-- [ ] Verify frontend loads with live data
-- [ ] (Optional) Connect GitHub repo for auto-deploy
-- [ ] (Optional) Set up weekly cron schedule
+- [ ] Create `streamlit_app.py` (dashboard + pipeline access)
+- [ ] Create `.streamlit/config.toml` (Groww theme)
+- [ ] Update `requirements.txt` (add `streamlit`, `plotly`; remove `flask`, `flask-cors`, `gunicorn`)
+- [ ] Ensure `data_seed/` has latest `themes.json` and `pulse.md`
+- [ ] Remove Railway/Vercel files (`server.py`, `Procfile`, `nixpacks.toml`, `runtime.txt`, `frontend/vercel.json`)
+- [ ] Push to GitHub
+- [ ] Connect repo on [share.streamlit.io](https://share.streamlit.io)
+- [ ] Add secrets (GROQ_API_KEY, EMAIL_RECIPIENT, GOOGLE_DOC_ID, MCP_SERVER_URL)
+- [ ] Verify dashboard loads at `*.streamlit.app` URL
+- [ ] (Optional) Add sidebar pipeline trigger button
