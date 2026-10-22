@@ -2,3 +2,6 @@ google-play-scraper
 groq
 python-dotenv
 requests
+flask
+flask-cors
+gunicorn
