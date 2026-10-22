@@ -377,24 +377,28 @@ The MCP server exposes three tools:
 
 1. **Implement `src/main.py`**
    ```python
-   def run_pipeline():
+   def run_pipeline(skip_fetch=False, dry_run=False):
        # Stage 1: Collect
-       raw_reviews = fetch_reviews(APP_ID, ...)
+       raw_reviews = load_reviews() if skip_fetch else fetch_reviews()
+       save_reviews(raw_reviews)
        
        # Stage 2: Process
-       cleaned_reviews = process_reviews(raw_reviews)
+       cleaned, stats = process_reviews(raw_reviews)
+       save_cleaned(cleaned, stats)
        
        # Stage 3: Cluster
-       themes = cluster_reviews(cleaned_reviews)
+       themes_data = cluster_reviews(cleaned)
+       save_themes(themes_data)
        
        # Stage 4: Generate
-       pulse = generate_pulse(themes, len(cleaned_reviews), date_range)
+       date_range = get_date_range()
+       pulse = generate_pulse(themes_data, len(cleaned), date_range)
+       save_pulse(pulse)
        
        # Stage 5: Deliver
-       doc_url = publish_to_docs(pulse, title)
-       draft_id = create_email_draft(pulse, doc_url, recipient)
+       doc_url = deliver_pulse(pulse, dry_run=dry_run)
        
-       print(f"Done. Doc: {doc_url} | Draft: {draft_id}")
+       print(f"Done. Doc: {doc_url}")
    ```
 
 2. **Add CLI interface**
@@ -404,7 +408,7 @@ The MCP server exposes three tools:
 3. **End-to-end test run**
    - Run the full pipeline from scratch.
    - Verify each intermediate file is produced: `raw_reviews.json`, `cleaned_reviews.json`, `themes.json`, `pulse.md`.
-   - Verify Google Doc and Gmail draft are created.
+   - Verify Google Doc is appended and Gmail email is sent (or previewed via dry-run).
 
 4. **Logging**
    - Add summary log at each stage: review count, theme count, word count, delivery status.
@@ -418,7 +422,7 @@ The MCP server exposes three tools:
 
 ### Exit Criteria
 - `python src/main.py` runs end to end with no errors.
-- Google Doc created, Gmail draft created, console summary printed.
+- Google Doc appended, Gmail email sent (or dry-run previewed), console summary printed.
 - All intermediate JSON files are valid and consistent.
 
 ---
