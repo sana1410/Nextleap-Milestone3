@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff","on-primary-fixed":"#002116","primary-fixed":"#59fdc5","tertiary":"#5d3fe0","on-tertiary-fixed-variant":"#441cc8","primary-fixed-dim":"#2fe0aa","on-secondary-container":"#004375","error-container":"#ffdad6","surface-container":"#efecff","surface":"#fcf8ff","primary":"#006c4f","outline":"#6b7b72","surface-container-low":"#f5f2ff","on-primary-fixed-variant":"#00513b","on-primary-container":"#00533c","background":"#fcf8ff","on-tertiary-container":"#461fc9","surface-bright":"#fcf8ff","inverse-on-surface":"#f2efff","inverse-surface":"#2f2e43","tertiary-fixed-dim":"#c9bfff","on-surface-variant":"#3c4a43","on-surface":"#1a1a2e","on-background":"#1a1a2e","secondary":"#0061a5","surface-container-high":"#e8e5ff","on-secondary-fixed-variant":"#00497e","surface-container-highest":"#e2e0fc","on-secondary-fixed":"#001c37","error":"#ba1a1a","tertiary-container":"#b9adff","surface-variant":"#e2e0fc","surface-tint":"#006c4f","on-error":"#ffffff","inverse-primary":"#2fe0aa","surface-container-lowest":"#ffffff","secondary-fixed":"#d2e4ff","on-secondary":"#ffffff","on-primary":"#ffffff","tertiary-fixed":"#e5deff","secondary-container":"#6fb2fd","on-tertiary-fixed":"#1a0063","surface-dim":"#dad7f3","on-error-container":"#93000a","secondary-fixed-dim":"#a0caff","primary-container":"#00d09c","outline-variant":"#bacac1"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-xl":"2rem","margin-mobile":"1rem","gutter-mobile":"1rem","space-sm":"0.5rem","space-lg":"1.5rem",margin:"2rem","space-md":"1rem",gutter:"1.5rem","space-xs":"0.25rem"},fontFamily:{"label-lg":["Inter"],"label-sm":["Inter"],"headline-sm":["Inter"],"body-md":["Inter"],"tabular-nums":["Inter"],"display-lg-mobile":["Inter"],"body-sm":["Inter"],"label-md":["Inter"],"display-lg":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"headline-lg-mobile":["Inter"],"body-lg":["Inter"]},fontSize:{"label-lg":["14px",{lineHeight:"20px",letterSpacing:"0.01em",fontWeight:"600"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}],"headline-sm":["16px",{lineHeight:"24px",fontWeight:"600"}],"body-md":["14px",{lineHeight:"20px",fontWeight:"400"}],"tabular-nums":["14px",{lineHeight:"20px",fontWeight:"500"}],"display-lg-mobile":["30px",{lineHeight:"38px",letterSpacing:"-0.01em",fontWeight:"700"}],"body-sm":["12px",{lineHeight:"16px",fontWeight:"400"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"500"}],"display-lg":["40px",{lineHeight:"48px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg":["28px",{lineHeight:"36px",letterSpacing:"-0.015em",fontWeight:"600"}],"headline-md":["20px",{lineHeight:"28px",fontWeight:"600"}],"headline-lg-mobile":["22px",{lineHeight:"28px",letterSpacing:"-0.01em",fontWeight:"600"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 bg-surface-container-lowest border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-7xl mx-auto px-6 flex items-center justify-between"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><div class="flex items-center justify-center text-primary-container animate-pulse"><span class="material-symbols-outlined text-[24px]">ssid_chart</span></div><span class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">Weekly App Review Pulse</span></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-surface-container text-on-surface font-semibold rounded-lg"><a aria-current="page" class="px-space-md py-space-xs transition-all bg-surface-container text-on-surface font-semibold rounded-lg" data-path="overview-pulse" href="#">Overview</a><a class="font-label-lg text-label-lg px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="sentiment-trends" href="#">Sentiment Trends</a><a class="font-label-lg text-label-lg px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="app-ratings-breakdown" href="#">Rating Breakdown</a><a class="font-label-lg text-label-lg px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="feature-feedback-issues" href="#">Feature Issues</a></nav></div><div class="flex items-center gap-space-md"><div class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full border border-outline-variant/40 bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-[0_1px_4px_rgba(0,0,0,0.03)]"><span class="material-symbols-outlined text-[16px] text-primary-container">calendar_today</span><span>Period: Aug 8 – Oct 16, 2026</span></div><div class="h-6 w-[1px] bg-outline-variant/40 hidden sm:block"></div><span class="font-headline-sm text-headline-sm font-bold text-primary-container tracking-wide">Groww</span><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="max-w-7xl mx-auto px-6 py-6"><div class="flex flex-col w-full gap-space-lg antialiased">
+<!-- Summary Stats Row -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col justify-between transition-all duration-300 hover:shadow-md group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Reviews Analyzed</span>
+<div class="w-10 h-10 rounded-lg bg-primary-container/15 flex items-center justify-center text-on-primary-container group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">description</span>
+</div>
+</div>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg font-bold text-on-surface tracking-tight">380</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold flex items-center">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>+12.4%
+        </span>
+</div>
+<div class="mt-2 text-outline font-body-sm text-body-sm flex items-center gap-1">
+<span>Play Store & App Store feed</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col justify-between transition-all duration-300 hover:shadow-md group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Themes Found</span>
+<div class="w-10 h-10 rounded-lg bg-primary-container/15 flex items-center justify-center text-on-primary-container group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">category</span>
+</div>
+</div>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg font-bold text-on-surface tracking-tight">5</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Active categories</span>
+</div>
+<div class="mt-2 text-outline font-body-sm text-body-sm flex items-center gap-1">
+<span>High-confidence cluster tag</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col justify-between transition-all duration-300 hover:shadow-md group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Avg Rating</span>
+<div class="w-10 h-10 rounded-lg bg-primary-container/15 flex items-center justify-center text-on-primary-container group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">grade</span>
+</div>
+</div>
+<div class="mt-3 flex items-center gap-3">
+<span class="font-display-lg text-display-lg font-bold text-on-surface tracking-tight">2.6</span>
+<!-- Crisp 2.6 Star rating component -->
+<div class="flex items-center gap-0.5" title="Average Rating: 2.6 / 5.0">
+<!-- Star 1: 100% -->
+<span class="material-symbols-outlined text-secondary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<!-- Star 2: 100% -->
+<span class="material-symbols-outlined text-secondary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<!-- Star 3: 60% partial gradient star -->
+<div class="relative inline-flex items-center justify-center text-[20px]">
+<span class="material-symbols-outlined text-surface-container-highest text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<div class="absolute inset-0 overflow-hidden w-[60%] flex">
+<span class="material-symbols-outlined text-secondary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<!-- Star 4: empty -->
+<span class="material-symbols-outlined text-surface-container-highest text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<!-- Star 5: empty -->
+<span class="material-symbols-outlined text-surface-container-highest text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="mt-2 text-error font-body-sm text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+<span>-0.3 vs. previous 10w cycle</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col justify-between transition-all duration-300 hover:shadow-md group">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Analysis Window</span>
+<div class="w-10 h-10 rounded-lg bg-primary-container/15 flex items-center justify-center text-on-primary-container group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">date_range</span>
+</div>
+</div>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg font-bold text-on-surface tracking-tight">10 weeks</span>
+</div>
+<div class="mt-2 text-outline font-body-sm text-body-sm flex items-center gap-1">
+<span>Aug 8, 2026 – Oct 16, 2026</span>
+</div>
+</div>
+</section>
+<!-- Main Content 60% / 40% Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN (60% ~ 7 cols of 12) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Section 1: Top Themes Card -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-space-lg">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">sell</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">Top Themes</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ranked by volume of incoming feedback (380 total analyzed)</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-semibold">Priority View</span>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Theme 1 -->
+<div class="bg-surface rounded-xl p-space-md transition-all duration-200 hover:shadow-sm" style="border-left: 4px solid #00D09C;">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Feature Gaps & Trading Tools</h3>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full font-semibold" style="background-color: rgba(0, 208, 156, 0.15); color: #00533c;">109 reviews</span>
+</div>
+<div class="flex items-center gap-1" title="3.0 Average Stars">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-surface-container-highest" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-surface-container-highest" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md font-bold text-on-surface ml-1">3.0</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="mt-3 flex items-center gap-3">
+<div class="w-full bg-surface-container-high rounded-full h-2 overflow-hidden">
+<div class="h-2 rounded-full transition-all duration-1000 ease-out" style="width: 29%; background-color: #00D09C;"></div>
+</div>
+<span class="font-tabular-nums text-tabular-nums text-on-surface-variant font-semibold text-xs whitespace-nowrap">29%</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2.5">
+              Traders demand advanced indicators and chart-based trading parity with competitors.
+            </p>
+</div>
+<!-- Theme 2 -->
+<div class="bg-surface rounded-xl p-space-md transition-all duration-200 hover:shadow-sm" style="border-left: 4px solid #4A90D9;">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">UI/UX & Navigation Issues</h3>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full font-semibold" style="background-color: rgba(74, 144, 217, 0.15); color: #004375;">101 reviews</span>
+</div>
+<div class="flex items-center gap-1" title="3.5 Average Stars">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<div class="relative inline-flex items-center justify-center text-[16px]">
+<span class="material-symbols-outlined text-surface-container-highest text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<div class="absolute inset-0 overflow-hidden w-[50%] flex">
+<span class="material-symbols-outlined text-secondary-container text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-surface-container-highest" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md font-bold text-on-surface ml-1">3.5</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="mt-3 flex items-center gap-3">
+<div class="w-full bg-surface-container-high rounded-full h-2 overflow-hidden">
+<div class="h-2 rounded-full transition-all duration-1000 ease-out" style="width: 27%; background-color: #4A90D9;"></div>
+</div>
+<span class="font-tabular-nums text-tabular-nums text-on-surface-variant font-semibold text-xs whitespace-nowrap">27%</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2.5">
+              Users report confusing navigation, accidental triggers, and missing data displays.
+            </p>
+</div>
+<!-- Theme 3 -->
+<div class="bg-surface rounded-xl p-space-md transition-all duration-200 hover:shadow-sm" style="border-left: 4px solid #F5A623;">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Customer Support & Responsiveness</h3>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full font-semibold" style="background-color: rgba(245, 166, 35, 0.18); color: #6b3e00;">72 reviews</span>
+</div>
+<div class="flex items-center gap-1" title="1.6 Average Stars">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<div class="relative inline-flex items-center justify-center text-[16px]">
+<span class="material-symbols-outlined text-surface-container-highest text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<div class="absolute inset-0 overflow-hidden w-[60%] flex">
+<span class="material-symbols-outlined text-secondary-container text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-surface-container-highest" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-surface-container-highest" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-surface-container-highest" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md font-bold text-on-surface ml-1">1.6</span>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="mt-3 flex items-center gap-3">
+<div class="w-full bg-surface-container-high rounded-full h-2 overflow-hidden">
+<div class="h-2 rounded-full transition-all duration-1000 ease-out" style="width: 19%; background-color: #F5A623;"></div>
+</div>
+<span class="font-tabular-nums text-tabular-nums text-on-surface-variant font-semibold text-xs whitespace-nowrap">19%</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2.5">
+              Users cite unreachable teams and unresolved critical account issues.
+            </p>
+</div>
+</div>
+</section>
+<!-- Section 2: Suggested Actions Card -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">lightbulb</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">Suggested Actions</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Data-informed interventions prioritized for product sprint</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-primary/10 text-primary font-semibold">Q4 Priority</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Item 1 -->
+<div class="p-space-md rounded-xl bg-surface flex items-start gap-space-md transition-colors hover:bg-surface-container-low">
+<div class="w-7 h-7 rounded-full bg-on-surface text-surface-container-lowest font-headline-sm text-headline-sm font-bold flex items-center justify-center shrink-0">
+              1
+            </div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center justify-between gap-2 flex-wrap">
+<span class="font-body-md text-body-md font-semibold text-on-surface leading-snug">
+                  Implement trailing stop-loss orders and expand technical indicator libraries to match competitor features.
+                </span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full font-bold whitespace-nowrap" style="background-color: rgba(0, 208, 156, 0.15); color: #00533c;">
+                  Feature Gaps
+                </span>
+</div>
+<div class="flex items-center gap-4 text-outline font-body-sm text-body-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">timer</span>Est: Sprint 42</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">group</span>Trading Tribe</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-space-md rounded-xl bg-surface flex items-start gap-space-md transition-colors hover:bg-surface-container-low">
+<div class="w-7 h-7 rounded-full bg-on-surface text-surface-container-lowest font-headline-sm text-headline-sm font-bold flex items-center justify-center shrink-0">
+              2
+            </div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center justify-between gap-2 flex-wrap">
+<span class="font-body-md text-body-md font-semibold text-on-surface leading-snug">
+                  Redesign chart navigation to prevent accidental scalper mode triggers and ensure back buttons remain visible.
+                </span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full font-bold whitespace-nowrap" style="background-color: rgba(74, 144, 217, 0.15); color: #004375;">
+                  UI/UX
+                </span>
+</div>
+<div class="flex items-center gap-4 text-outline font-body-sm text-body-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">timer</span>Est: Sprint 41 hotfix</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">group</span>Design System</span>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-space-md rounded-xl bg-surface flex items-start gap-space-md transition-colors hover:bg-surface-container-low">
+<div class="w-7 h-7 rounded-full bg-on-surface text-surface-container-lowest font-headline-sm text-headline-sm font-bold flex items-center justify-center shrink-0">
+              3
+            </div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center justify-between gap-2 flex-wrap">
+<span class="font-body-md text-body-md font-semibold text-on-surface leading-snug">
+                  Audit support workflows to reduce automated responses and improve resolution times for critical account errors.
+                </span>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full font-bold whitespace-nowrap" style="background-color: rgba(245, 166, 35, 0.18); color: #6b3e00;">
+                  Support
+                </span>
+</div>
+<div class="flex items-center gap-4 text-outline font-body-sm text-body-sm">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">timer</span>Immediate SOP Review</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">group</span>Ops & CX Team</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN (40% ~ 5 cols of 12) -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- Section 3: User Voices Card -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">forum</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">User Voices</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Direct feedback from verified customer stores</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-on-surface">open_in_new</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Quote 1 -->
+<div class="rounded-xl p-4 transition-all hover:bg-surface-container relative" style="background-color: #F1F3F5; border-left: 4px solid #F5A623;">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-outline-variant" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-outline-variant" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-outline-variant" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">v8.4.1 • Android</span>
+</div>
+<p class="font-body-md text-body-md italic text-on-surface leading-relaxed">
+              “Customer care is not easy to reach nor is able to solve the issues properly.”
+            </p>
+</div>
+<!-- Quote 2 -->
+<div class="rounded-xl p-4 transition-all hover:bg-surface-container relative" style="background-color: #F1F3F5; border-left: 4px solid #4A90D9;">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-outline-variant" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-outline-variant" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-outline-variant" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">v8.3.9 • iOS</span>
+</div>
+<p class="font-body-md text-body-md italic text-on-surface leading-relaxed">
+              “Scalper button placement is terrible; whenever I hit back from a chart, it accidentally triggers scalping.”
+            </p>
+</div>
+<!-- Quote 3 -->
+<div class="rounded-xl p-4 transition-all hover:bg-surface-container relative" style="background-color: #F1F3F5; border-left: 4px solid #00D09C;">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-outline-variant" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px] text-outline-variant" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">v8.4.2 • Android</span>
+</div>
+<p class="font-body-md text-body-md italic text-on-surface leading-relaxed">
+              “I'm talking about Trade directly from charts i.e., like Dhan you can simply drag drop SL and target levels.”
+            </p>
+</div>
+</div>
+</section>
+<!-- Section 4: Theme Distribution Card -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">pie_chart</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">Review Distribution</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Breakdown across 5 major classification clusters</p>
+</div>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-bold text-on-surface text-sm">380 Total</span>
+</div>
+<!-- Segmented Horizontal Stacked Bar -->
+<div class="w-full flex h-7 rounded-xl overflow-hidden p-0.5 bg-surface-container gap-0.5">
+<!-- 109 / 380 = 28.7% -->
+<div class="h-full rounded-l-lg transition-transform duration-200 hover:opacity-90 relative group cursor-pointer" style="width: 28.7%; background-color: #00D09C;" title="Feature Gaps & Trading Tools: 28.7% (109)"></div>
+<!-- 101 / 380 = 26.6% -->
+<div class="h-full transition-transform duration-200 hover:opacity-90 relative group cursor-pointer" style="width: 26.6%; background-color: #4A90D9;" title="UI/UX & Navigation: 26.6% (101)"></div>
+<!-- 72 / 380 = 18.9% -->
+<div class="h-full transition-transform duration-200 hover:opacity-90 relative group cursor-pointer" style="width: 18.9%; background-color: #F5A623;" title="Customer Support: 18.9% (72)"></div>
+<!-- 58 / 380 = 15.3% -->
+<div class="h-full transition-transform duration-200 hover:opacity-90 relative group cursor-pointer" style="width: 15.3%; background-color: #7B61FF;" title="Performance & Stability: 15.3% (58)"></div>
+<!-- 40 / 380 = 10.5% -->
+<div class="h-full rounded-r-lg transition-transform duration-200 hover:opacity-90 relative group cursor-pointer" style="width: 10.5%; background-color: #E74C3C;" title="Order Execution: 10.5% (40)"></div>
+</div>
+<!-- Legend -->
+<div class="flex flex-col gap-2 pt-1 font-body-sm text-body-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: #00D09C;"></span>
+<span class="text-on-surface font-medium">Feature Gaps & Trading Tools</span>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-semibold text-on-surface-variant">109 (28.7%)</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: #4A90D9;"></span>
+<span class="text-on-surface font-medium">UI/UX & Navigation Issues</span>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-semibold text-on-surface-variant">101 (26.6%)</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: #F5A623;"></span>
+<span class="text-on-surface font-medium">Customer Support</span>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-semibold text-on-surface-variant">72 (18.9%)</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: #7B61FF;"></span>
+<span class="text-on-surface font-medium">App Performance & Stability</span>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-semibold text-on-surface-variant">58 (15.3%)</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: #E74C3C;"></span>
+<span class="text-on-surface font-medium">Order Execution & Reliability</span>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-semibold text-on-surface-variant">40 (10.5%)</span>
+</div>
+</div>
+</section>
+<!-- Section 5: Rating Breakdown Card -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">bar_chart</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">Rating Breakdown</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Detailed star tier distribution</p>
+</div>
+</div>
+<span class="font-label-md text-label-md px-2.5 py-1 rounded-full bg-surface-container font-bold text-on-surface">
+            2.6 Avg
+          </span>
+</div>
+<div class="flex flex-col gap-3 pt-1">
+<!-- 5-star -->
+<div class="flex items-center gap-3">
+<span class="font-label-md text-label-md font-semibold text-on-surface w-7 flex items-center gap-0.5">
+              5 <span class="material-symbols-outlined text-[13px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+<div class="flex-1 bg-surface-container-high rounded-full h-2.5 overflow-hidden">
+<div class="h-2.5 rounded-full transition-all duration-1000 ease-out" style="width: 28.2%; background-color: #00D09C;"></div>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-semibold text-xs text-on-surface-variant w-24 text-right">
+              107 (28.2%)
+            </span>
+</div>
+<!-- 4-star -->
+<div class="flex items-center gap-3">
+<span class="font-label-md text-label-md font-semibold text-on-surface w-7 flex items-center gap-0.5">
+              4 <span class="material-symbols-outlined text-[13px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+<div class="flex-1 bg-surface-container-high rounded-full h-2.5 overflow-hidden">
+<div class="h-2.5 rounded-full transition-all duration-1000 ease-out" style="width: 7.9%; background-color: #55D6A9;"></div>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-semibold text-xs text-on-surface-variant w-24 text-right">
+              30 (7.9%)
+            </span>
+</div>
+<!-- 3-star -->
+<div class="flex items-center gap-3">
+<span class="font-label-md text-label-md font-semibold text-on-surface w-7 flex items-center gap-0.5">
+              3 <span class="material-symbols-outlined text-[13px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+<div class="flex-1 bg-surface-container-high rounded-full h-2.5 overflow-hidden">
+<div class="h-2.5 rounded-full transition-all duration-1000 ease-out" style="width: 11.6%; background-color: #F4B400;"></div>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-semibold text-xs text-on-surface-variant w-24 text-right">
+              44 (11.6%)
+            </span>
+</div>
+<!-- 2-star -->
+<div class="flex items-center gap-3">
+<span class="font-label-md text-label-md font-semibold text-on-surface w-7 flex items-center gap-0.5">
+              2 <span class="material-symbols-outlined text-[13px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+<div class="flex-1 bg-surface-container-high rounded-full h-2.5 overflow-hidden">
+<div class="h-2.5 rounded-full transition-all duration-1000 ease-out" style="width: 6.6%; background-color: #F5A623;"></div>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-semibold text-xs text-on-surface-variant w-24 text-right">
+              25 (6.6%)
+            </span>
+</div>
+<!-- 1-star -->
+<div class="flex items-center gap-3">
+<span class="font-label-md text-label-md font-semibold text-on-surface w-7 flex items-center gap-0.5">
+              1 <span class="material-symbols-outlined text-[13px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+<div class="flex-1 bg-surface-container-high rounded-full h-2.5 overflow-hidden">
+<div class="h-2.5 rounded-full transition-all duration-1000 ease-out" style="width: 45.8%; background-color: #E74C3C;"></div>
+</div>
+<span class="font-tabular-nums text-tabular-nums font-semibold text-xs text-error font-bold w-24 text-right">
+              174 (45.8%)
+            </span>
+</div>
+</div>
+<div class="mt-2 p-3 rounded-lg bg-error-container/40 flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[18px]">warning</span>
+<span class="font-body-sm text-body-sm text-on-error-container font-medium">
+            1-star ratings represent 45.8% of feedback, heavily driven by order execution freezes.
+          </span>
+</div>
+</section>
+</div>
+</div>
+<script>
+    // Smooth progress bar fill on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const bars = document.querySelectorAll('[style*="width:"]');
+      bars.forEach(bar => {
+        const targetWidth = bar.style.width;
+        bar.style.width = '0%';
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            bar.style.width = targetWidth;
+          }, 80);
+        });
+      });
+    });
+  </script>
+</div></div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant/30 py-space-lg"><div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-space-md text-on-surface-variant font-body-sm text-body-sm"><span>Groww Product Intelligence • Weekly App Review Pulse Dashboard</span><span>Updated weekly • Internal analytics view</span></div></footer></body></html>
